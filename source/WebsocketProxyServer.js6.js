@@ -37,7 +37,8 @@ class WebsocketProxyServer {
 
         let webSocketServer = new WebSocketServer(proxyEntry.listen);
 
-        webSocketServer.on("connection", (webSocket) => {
+        webSocketServer.on("connection", (webSocket, req) => {
+            webSocket.upgradeReq = req;
             new ProxiedWebsocketConnection(proxyEntry, webSocket, this.permissionDispatcher, this.permissionChecker,
                                            this.metadataObserver);
         });
